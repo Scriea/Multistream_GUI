@@ -13,7 +13,6 @@ from utils.app import App
 from utils.detector import Detector
 
 
-
 """
 Paths
 """
@@ -23,6 +22,7 @@ MODEL_PATH = os.path.join(ROOT, 'models', 'yolov8n_ppe.pt')
 FILE_NAME = "Result"
 SOURCE_PATH = "rtsp://rtsp:Rtsp1234@158.0.17.109:554/streaming/channels/1"
 SOURCE_PATH = 0
+
 
 """
 Variables
@@ -39,7 +39,6 @@ size = (frame_width, frame_height)
 Detector Instance
 
 """
-
 detector = Detector(MODEL_PATH, SOURCE_PATH)
 
 """

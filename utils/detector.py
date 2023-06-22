@@ -24,6 +24,10 @@ class Detector:
     def __del__(self):
         if self.cap.isOpened():
             self.cap.release()
+    def change_stream(self, SOURCE_PATH):
+        self.SOURCE_PATH = SOURCE_PATH
+        self.cap.release()
+        self.cap = cv2.VideoCapture(self.SOURCE_PATH)
 
     def get_frame_size(self):
         return self.width, self.height
