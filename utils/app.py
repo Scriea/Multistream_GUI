@@ -21,8 +21,9 @@ class App:
         self.canvas.pack()
         self.menu = tkinter.StringVar()
         self.menu.set(self.stream_list[0])
-
-        self.button_snap = tkinter.Button(window, text = "Snapshot", width = 50, command=self.snapshot, pady= 50)
+        self.entry = tkinter.Entry(window, width = 50, borderwidth= 5)
+        self.entry.pack()
+        # self.button_snap = tkinter.Button(window, text = "Snapshot", width = 50, command=self.snapshot, pady= 50)
         self.delay = delay
         self.drop = tkinter.OptionMenu(self.window, self.menu, *self.stream_list, command=self.onMenuClick)
         self.drop.pack()
@@ -30,9 +31,9 @@ class App:
         self.window.mainloop()
         
     def onMenuClick(self, args):
-        self.menu.set(args)
-        self.detector.change_stream(args)
 
+        self.menu.set(args)
+        self.detector.change_stream(str(args))
 
     def update(self):
         ret, frame = self.detector.get_frame()
@@ -41,7 +42,3 @@ class App:
             self.canvas.create_image(0,0,image= self.photo, anchor =tkinter.NW)
         self.window.after(self.delay, self.update)
 
-    def snapshot(self):
-        ret, frame = self.detector.get_frame()
-        if ret:
-            print("Saave karo photo chutiye")

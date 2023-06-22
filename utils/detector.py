@@ -10,7 +10,7 @@ import PIL
 
 
 class Detector:
-    def __init__(self,MODEL_PATH, SOURCE_PATH = 0, width = 800, height = 600) -> None:
+    def __init__(self,MODEL_PATH, SOURCE_PATH = 0, width = 1024, height = 720) -> None:
         self.SOURCE_PATH = SOURCE_PATH
         self.MODEL_PATH = MODEL_PATH
         self.width = width
@@ -33,11 +33,12 @@ class Detector:
         return self.width, self.height
 
     def get_frame(self):
+        
         if self.cap.isOpened():
             ret, frame = self.cap.read()
             if ret:
                 return ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        return ret, None
+        return False, None
     
     def predict(self):
         ret, frame = self.get_frame()

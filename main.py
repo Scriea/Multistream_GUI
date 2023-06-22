@@ -11,6 +11,7 @@ from pathlib import Path
 import time
 from utils.app import App
 from utils.detector import Detector
+from utils.general import get_stream_list
 
 
 """
@@ -18,11 +19,10 @@ Paths
 """
 ROOT = os.getcwd();
 MODEL_PATH = os.path.join(ROOT, 'models', 'yolov8n_ppe.pt')
-#SOURCE_PATH = "samples\detection.mp4"
-FILE_NAME = "Result"
-SOURCE_PATH = "rtsp://rtsp:Rtsp1234@158.0.17.109:554/streaming/channels/1"
-SOURCE_PATH = 0
 
+FILE_NAME = "Result"
+STREAM_LIST = get_stream_list()
+SOURCE_PATH = STREAM_LIST[0]
 
 """
 Variables
