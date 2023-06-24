@@ -3,7 +3,8 @@
 import cv2
 import numpy as np
 import sys
-import tkinter
+from tkinter import *
+import customtkinter
 import cv2
 import os
 from ultralytics import YOLO
@@ -45,58 +46,17 @@ detector = Detector(MODEL_PATH, SOURCE_PATH)
 GUI
 
 """
+customtkinter.set_appearance_mode('dark')
+customtkinter.set_default_color_theme('green')
 
-App(tkinter.Tk(), detector, "New")
+root = customtkinter.CTk()
+#root  = tkinter.Tk()
+root.geometry("1280x720")
+# root.resizable()
+
+
+
+## Call GUI
+App(root, detector, "PPE Detector")
   
 
-
-
-
-
-
-
-
-
-
-
-
-
-# model = YOLO(MODEL_PATH)
-# camera = cv2.VideoCapture(SOURCE_PATH)
-# camera.set(3,frame_width)
-# camera.set(4,frame_height)
-# writer = cv2.VideoWriter('results\\filename.mkv', 
-#                          cv2.VideoWriter_fourcc(*'MJPG'),
-#                          10, size)
-
-
-
-# pygame.init()
-# pygame.display.set_caption("Camera stream")
-# screen = pygame.display.set_mode([1024,720])
-
-# while True:
-#     if not camera.isOpened():
-#         frame = np.zeros(size, dtype=float)
-#     else:
-#         ret, frame = camera.read()
-#         results = model(frame)
-#         frame = results[0].plot()
-#         if not ret:
-#             print("Exitting Feed!!")
-#             break
-#     screen.fill([0,0,0])
-    
-#     frame = cv2.flip(frame, 1)
-#     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#     frame = np.rot90(frame)
-#     frame = pygame.surfarray.make_surface(frame)
-#     screen.blit(frame, (0,0))
-#     pygame.display.update()
-
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:
-#             sys.exit(0)    
-
-# pygame.quit()
-# cv2.destroyAllWindows()
