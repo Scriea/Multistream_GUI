@@ -10,43 +10,59 @@ import PIL
 
 
 class Detector:
-    def __init__(self,MODEL_PATH, SOURCE_PATH = 0, width = 800, height = 600) -> None:
+    def __init__(self,MODEL_PATH, SOURCE_PATH= None, width = 1024, height = 720) -> None:
         self.SOURCE_PATH = SOURCE_PATH
         self.MODEL_PATH = MODEL_PATH
         self.width = width
         self.height = height
-        self.cap = cv2.VideoCapture(self.SOURCE_PATH)
-        self.cap.set(3, width)
-        self.cap.set(4, height)
+        
+        self.cap = cv2.VideoCapture(self.SOURCE_PATH) if SOURCE_PATH else None
+        if self.cap:
+            self.cap.set(3, width)
+            self.cap.set(4, height)
         self.model = YOLO(self.MODEL_PATH)
 
     
     def __del__(self):
-        if self.cap.isOpened():
-            self.cap.release()
+        if self.cap:
+            if self.cap.isOpened():
+                self.cap.release()
+
     def change_stream(self, SOURCE_PATH):
         self.SOURCE_PATH = SOURCE_PATH
-        self.cap.release()
+        try:
+            self.cap.release()
+        except Exception as e:
+            print(e)
+            pass
         self.cap = cv2.VideoCapture(self.SOURCE_PATH)
-
+        self.cap.set(3, self.width)
+        self.cap.set(4, self.height)
+        
     def get_frame_size(self):
         return self.width, self.height
 
     def get_frame(self):
-        
-        if self.cap.isOpened():
-            ret, frame = self.cap.read()
-            if ret:
-                return ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        if self.cap:
+            if self.cap.isOpened():
+                ret, frame = self.cap.read()
+                if ret:
+                    frame = cv2.resize(frame, (self.width, self.height), interpolation= cv2.INTER_LINEAR)
+                    return ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         return False, None
     
     def predict(self):
-        ret, frame = self.get_frame()
-        if not ret:
-            return ret, None
-        results = self.model(frame)
-        annotated_frame = results[0].plot()
-        return ret, annotated_frame
+        if not self.cap:
+            return False, None
+        if self.cap.isOpened():
+            ret, frame = self.cap.read()         
+            if not ret:
+                return ret, None
+            frame = cv2.resize(frame, (self.width, self.height), interpolation= cv2.INTER_LINEAR)
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results = self.model(frame)
+            annotated_frame = results[0].plot()
+            return ret, annotated_frame
 
 # """
 # Paths

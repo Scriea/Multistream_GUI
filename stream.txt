@@ -1,4 +1,7 @@
 samples/detection.mp4
+samples/detection3.mkv
+samples/detection4.mkv
+samples/detection2.mkv
 rtsp://rtsp:Rtsp1234@158.0.13.40:554/streaming/channels/1801
 rtsp://rtsp:Rtsp1234@158.0.17.142:554/streaming/channels/1
 rtsp://rtsp:Rtsp1234@158.0.17.141:554/streaming/channels/1

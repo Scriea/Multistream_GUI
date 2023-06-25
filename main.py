@@ -1,62 +1,65 @@
-# import pygame
-# from pygame.locals import *
+import os
 import cv2
-import numpy as np
 import sys
+import numpy as np
 from tkinter import *
 import customtkinter
-import cv2
-import os
-from ultralytics import YOLO
 from pathlib import Path
-import time
+from ultralytics import YOLO
 from utils.app import App
 from utils.detector import Detector
 from utils.general import get_stream_list
 
+customtkinter.set_appearance_mode('dark')
+customtkinter.set_default_color_theme('blue')
+
 
 """
 Paths
+
 """
+ROOT = Path(__file__).resolve().parents[0]
+STREAM_SOURCE = os.path.join(ROOT,'stream.txt')
 ROOT = os.getcwd();
-MODEL_PATH = os.path.join(ROOT, 'models', 'yolov8n_ppe.pt')
+MODEL_PATH = os.path.join(ROOT, 'models', 'yolov8n_e100_newdataset.pt')
 
 FILE_NAME = "Result"
-STREAM_LIST = get_stream_list()
-SOURCE_PATH = STREAM_LIST[0]
+
+STREAM_LIST = get_stream_list(source= STREAM_SOURCE)
+try:
+    SOURCE_PATH = STREAM_LIST[0]
+except Exception as e:
+    print(e)
+    print("Please enter a video path/url in stream.txt")
+    exit()
+
 
 """
 Variables
 
 """
-prev_time = 0
-curr_time = 0
-frame_width = 1024
-frame_height = 720
-font = cv2.FONT_HERSHEY_SIMPLEX
-size = (frame_width, frame_height)
+frame_width = 1200
+frame_height = 800
+
+
+
 
 """
 Detector Instance
 
+An object created for initializing video feed.
+Contains detection code as well.
+
 """
-detector = Detector(MODEL_PATH, SOURCE_PATH)
+detector = Detector(MODEL_PATH, width= frame_width, height= frame_height)
 
 """
 GUI
 
 """
-customtkinter.set_appearance_mode('dark')
-customtkinter.set_default_color_theme('green')
 
-root = customtkinter.CTk()
-#root  = tkinter.Tk()
-root.geometry("1280x720")
-# root.resizable()
-
-
-
-## Call GUI
-App(root, detector, "PPE Detector")
+app = App(detector, "PPE Detector", source= STREAM_SOURCE)
+app.update()
+app.mainloop()
   
 
