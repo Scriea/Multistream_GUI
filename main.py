@@ -21,7 +21,7 @@ Paths
 ROOT = Path(__file__).resolve().parents[0]
 STREAM_SOURCE = os.path.join(ROOT,'stream.txt')
 ROOT = os.getcwd();
-MODEL_PATH = os.path.join(ROOT, 'models', 'yolov8n_e100_newdataset.pt')
+MODEL_PATH = os.path.join(ROOT, 'models', 'best.pt')
 
 FILE_NAME = "Result"
 
