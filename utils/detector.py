@@ -61,7 +61,7 @@ class Detector:
             if not ret:
                 return ret, None
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results = self.model(frame, iou = 0.5)
+            results = self.model.predict(frame, iou = 0.5, verbose = False)
             frame = results[0].plot(line_width = 1, font_size = 0.1)
             frame = cv2.resize(frame, (self.width, self.height), interpolation= cv2.INTER_LINEAR)
             return ret, frame

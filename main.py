@@ -42,8 +42,6 @@ frame_width = 1200
 frame_height = 800
 
 
-
-
 """
 Detector Instance
 
@@ -53,13 +51,12 @@ Contains detection code as well.
 """
 detector = Detector(MODEL_PATH, width= frame_width, height= frame_height)
 
+
 """
 GUI
 
 """
 
-app = App(detector, "PPE Detector", source= STREAM_SOURCE)
+app = App(detector, "PPE Detector", source= STREAM_SOURCE, delay= 120)
 app.update()
 app.mainloop()
-  
-
